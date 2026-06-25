@@ -2,56 +2,68 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Usuario;
 use Illuminate\Http\Request;
+use App\Models\Usuario;
 
 class UsuarioController extends Controller
 {
     public function index()
     {
-        $usuarios = Usuario::orderBy('id','desc')->get();
+        $usuarios = Usuario::orderBy('id', 'desc')->get();
+        $editando = false;
+        $usuario  = null;
 
-        return view('usuarios', compact('usuarios'));
+        return view('usuarios.index', compact('usuarios', 'editando', 'usuario'));
     }
 
     public function store(Request $request)
     {
-        Usuario::create([
-            'nome' => $request->nome,
-            'email' => $request->email,
-            'senha' => bcrypt($request->senha),
-            'plano' => $request->plano
+        $request->validate([
+            'nome'  => 'required|max:100',
+            'email' => 'required|email|unique:usuarios,email|max:150',
+            'plano' => 'required|in:Básico,Standard,Premium',
+        ], [
+            'nome.required'   => 'O nome é obrigatório.',
+            'email.required'  => 'O email é obrigatório.',
+            'email.email'     => 'Digite um email válido.',
+            'email.unique'    => 'Esse email já está cadastrado.',
+            'plano.required'  => 'Escolha um plano.',
+            'plano.in'        => 'Plano inválido.',
         ]);
 
-        return redirect('/usuarios');
+        Usuario::create($request->only('nome', 'email', 'plano'));
+
+        return redirect()->route('usuarios.index')->with('sucesso', 'Usuário cadastrado com sucesso!');
     }
 
-    public function edit(int $id)
+    public function edit($id)
     {
-        $usuario = Usuario::findOrFail($id);
+        $usuarios = Usuario::orderBy('id', 'desc')->get();
+        $usuario  = Usuario::findOrFail($id);
+        $editando = true;
 
-        $usuarios = Usuario::orderBy('id','desc')->get();
-
-        return view('usuarios', compact('usuario','usuarios'));
+        return view('usuarios.index', compact('usuarios', 'editando', 'usuario'));
     }
 
-    public function update(Request $request,int $id)
+    public function update(Request $request, $id)
     {
-        $usuario = Usuario::findOrFail($id);
-
-        $usuario->update([
-            'nome' => $request->nome,
-            'email' => $request->email,
-            'plano' => $request->plano
+        $request->validate([
+            'nome'  => 'required|max:100',
+            'email' => 'required|email|unique:usuarios,email,' . $id . '|max:150',
+            'plano' => 'required|in:Básico,Standard,Premium',
         ]);
 
-        return redirect('/usuarios');
+        $usuario = Usuario::findOrFail($id);
+        $usuario->update($request->only('nome', 'email', 'plano'));
+
+        return redirect()->route('usuarios.index')->with('sucesso', 'Usuário atualizado com sucesso!');
     }
 
-    public function destroy(int $id)
+    public function destroy($id)
     {
-        Usuario::destroy($id);
+        $usuario = Usuario::findOrFail($id);
+        $usuario->delete();
 
-        return redirect('/usuarios');
+        return redirect()->route('usuarios.index')->with('sucesso', 'Usuário excluído com sucesso!');
     }
 }

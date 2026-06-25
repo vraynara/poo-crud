@@ -1,71 +1,48 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
-
+<html lang="pt-br">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login Netflix</title>
-
-    @vite(['resources/css/app.css','resources/js/app.js'])
+    <title>Login - Netflix</title>
+    <link rel="stylesheet" href="{{ asset('css/style.css') }}">
 </head>
+<body class="login-body">
 
-<body class="bg-[#141414] flex justify-center items-center min-h-screen">
+    <div class="login-container">
 
-    <div class="bg-[#1f1f1f] w-[400px] p-10 rounded-xl shadow-2xl">
-
-        <h1 class="text-center text-red-600 text-4xl font-bold mb-8">
-            NETFLIX
-        </h1>
-
-        @if(session('erro'))
-            <div class="bg-red-600 text-white p-3 rounded mb-4">
-                {{ session('erro') }}
-            </div>
-        @endif
-
-        <form method="POST" action="/login">
-
+        <form action="{{ route('login') }}" method="POST">
             @csrf
 
-            <div class="mb-4">
+            <h1>NETFLIX</h1>
 
-                <label class="block text-white mb-2">
-                    Email
-                </label>
-
+            <div class="input-group">
+                <label for="email">Email</label>
                 <input
                     type="email"
                     name="email"
-                    class="w-full p-3 rounded text-black"
+                    id="email"
                     placeholder="Digite seu email"
+                    value="{{ old('email') }}"
                     required>
-
             </div>
 
-            <div class="mb-6">
-
-                <label class="block text-white mb-2">
-                    Senha
-                </label>
-
+            <div class="input-group">
+                <label for="password">Senha</label>
                 <input
                     type="password"
-                    name="senha"
-                    class="w-full p-3 rounded text-black"
+                    name="password"
+                    id="password"
                     placeholder="Digite sua senha"
                     required>
-
             </div>
 
-            <button
-                type="submit"
-                class="w-full bg-red-600 hover:bg-red-700 p-3 rounded">
-
-                Entrar
-
-            </button>
+            <button type="submit" class="btn-entrar">Entrar</button>
 
         </form>
+
+        @if($errors->any())
+            <p class="erro-msg">{{ $errors->first() }}</p>
+        @endif
 
     </div>
 

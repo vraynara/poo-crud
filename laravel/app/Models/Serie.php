@@ -11,6 +11,6 @@ class Serie extends Model
     protected $fillable = [
         'nome',
         'temporadas',
-        'genero'
+        'genero',
     ];
 }

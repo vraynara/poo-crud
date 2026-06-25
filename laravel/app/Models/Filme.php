@@ -11,6 +11,6 @@ class Filme extends Model
     protected $fillable = [
         'nome',
         'categoria',
-        'ano'
+        'ano',
     ];
 }

@@ -1,0 +1,273 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+/* ===== LOGIN ===== */
+
+.login-body {
+    background: #141414;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.login-container {
+    background: #1f1f1f;
+    width: 400px;
+    padding: 40px;
+    border-radius: 10px;
+    box-shadow: 0 0 20px rgba(0,0,0,.5);
+}
+
+.login-container h1 {
+    text-align: center;
+    color: #e50914;
+    margin-bottom: 25px;
+    font-size: 32px;
+}
+
+.input-group {
+    margin-bottom: 15px;
+}
+
+.input-group label {
+    display: block;
+    margin-bottom: 5px;
+    color: white;
+}
+
+.input-group input {
+    width: 100%;
+    padding: 12px;
+    border: none;
+    border-radius: 5px;
+    background: #333;
+    color: white;
+    font-size: 15px;
+}
+
+.input-group input:focus {
+    outline: 2px solid #e50914;
+}
+
+.btn-entrar {
+    width: 100%;
+    padding: 12px;
+    border: none;
+    border-radius: 5px;
+    background: #e50914;
+    color: white;
+    cursor: pointer;
+    font-size: 16px;
+    margin-top: 10px;
+}
+
+.btn-entrar:hover {
+    background: #b20710;
+}
+
+.erro-msg {
+    color: #e50914;
+    text-align: center;
+    margin-top: 15px;
+    font-size: 14px;
+}
+
+/* ===== HOME / NAVBAR ===== */
+
+.home-body {
+    background: #141414;
+    color: white;
+    min-height: 100vh;
+}
+
+.navbar {
+    background: #000;
+    padding: 20px 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 2px solid #e50914;
+}
+
+.logo {
+    color: #e50914;
+    font-size: 35px;
+    font-weight: bold;
+}
+
+.menu {
+    list-style: none;
+    display: flex;
+    gap: 20px;
+}
+
+.menu a {
+    text-decoration: none;
+    color: white;
+    transition: .3s;
+}
+
+.menu a:hover {
+    color: #e50914;
+}
+
+/* ===== CRUD ===== */
+
+.crud-box {
+    width: 90%;
+    margin: 40px auto;
+    background: #1f1f1f;
+    padding: 30px;
+    border-radius: 10px;
+}
+
+.crud-box h2 {
+    margin-bottom: 20px;
+    color: #e50914;
+    font-size: 26px;
+}
+
+.crud-form {
+    display: grid;
+    gap: 15px;
+    margin-bottom: 30px;
+}
+
+.crud-form input,
+.crud-form select {
+    padding: 12px;
+    border: none;
+    border-radius: 5px;
+    background: #333;
+    color: white;
+    font-size: 15px;
+}
+
+.crud-form input:focus,
+.crud-form select:focus {
+    outline: 2px solid #e50914;
+}
+
+.crud-form select option {
+    background: #333;
+}
+
+.buttons {
+    display: flex;
+    gap: 10px;
+}
+
+.buttons button {
+    padding: 12px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    background: #e50914;
+    color: white;
+    font-size: 15px;
+}
+
+.buttons button:hover {
+    background: #b20710;
+}
+
+.btn-cancelar {
+    padding: 12px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    background: #555;
+    color: white;
+    font-size: 15px;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+}
+
+.btn-cancelar:hover {
+    background: #444;
+}
+
+/* ===== TABELA ===== */
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+table th {
+    background: #e50914;
+    color: white;
+    padding: 15px;
+    text-align: center;
+}
+
+table td {
+    background: #2b2b2b;
+    padding: 15px;
+    text-align: center;
+    border-bottom: 1px solid #444;
+}
+
+table a {
+    text-decoration: none;
+    color: #fff;
+    font-weight: bold;
+}
+
+table a:hover {
+    color: #e50914;
+}
+
+.alerta {
+    padding: 12px 20px;
+    border-radius: 5px;
+    margin-bottom: 20px;
+    font-size: 14px;
+}
+
+.alerta-sucesso {
+    background: #1a4a1a;
+    color: #5cdb5c;
+    border: 1px solid #2d7a2d;
+}
+
+.alerta-erro {
+    background: #4a1a1a;
+    color: #db5c5c;
+    border: 1px solid #7a2d2d;
+}
+
+/* ===== RESPONSIVO ===== */
+
+@media (max-width: 768px) {
+
+    .navbar {
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    .menu {
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    .crud-box {
+        width: 95%;
+        padding: 20px;
+    }
+
+    table {
+        font-size: 13px;
+    }
+
+    table th,
+    table td {
+        padding: 10px 8px;
+    }
+}

@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 
 class LoginController extends Controller
 {
@@ -12,28 +12,32 @@ class LoginController extends Controller
         return view('login');
     }
 
-    public function autenticar(Request $request)
+    public function login(Request $request)
     {
-        $usuario = DB::table('login')
-            ->where('email', $request->email)
-            ->first();
+        $credenciais = $request->validate([
+            'email'    => 'required|email',
+            'password' => 'required',
+        ], [
+            'email.required'    => 'O email é obrigatório.',
+            'email.email'       => 'Digite um email válido.',
+            'password.required' => 'A senha é obrigatória.',
+        ]);
 
-        if ($usuario && $usuario->senha === $request->senha) {
-
-            session([
-                'usuario_logado' => $usuario->email
-            ]);
-
-            return redirect('/');
+        if (Auth::attempt($credenciais)) {
+            $request->session()->regenerate();
+            return redirect()->route('filmes.index');
         }
 
-        return back()->with('erro', 'Email ou senha inválidos');
+        return back()->withErrors([
+            'email' => 'Email ou senha incorretos.',
+        ]);
     }
 
-    public function sair()
+    public function logout(Request $request)
     {
-        session()->forget('usuario_logado');
-
-        return redirect('/login');
+        Auth::logout();
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+        return redirect()->route('login.form');
     }
 }
